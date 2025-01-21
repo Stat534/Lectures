@@ -1,0 +1,83 @@
+---
+title: 'Distance and Projections'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(message = FALSE)
+knitr::opts_chunk$set(warning = FALSE)
+knitr::opts_chunk$set(fig.align = 'center')
+library(tidyverse)
+library(ggmap)
+library(knitr)
+```
+
+# Cartography
+
+## Map Projections
+
+```{r, out.width = "400px"}
+knitr::include_graphics("face.png")
+```
+
+## Map Projections
+Map projections are a representation of a surface on a plane. Specifically, functions are designed to map the geographical coordinate system $(\lambda, \phi)$ to rectangular or polar coordinates ($x, y$) such that:
+
+$$x = f(\lambda, \phi), \; \; y = g(\lambda, \phi),$$
+
+where $f$ and $g$ are functions that define the projection.
+
+## Mercator projections
+A projection type we will use in this class is the Mercator projection. The Mercator projection gives the common square maps you are used to looking at. 
+
+$$ f(\lambda, \phi) = R\lambda, \; \; g(\lambda, \phi) = R * ln \left( tan \left( \frac{\pi}{4} + \frac{\phi}{2}\right) \right)$$
+
+The Mercator projection typically includes a rectangular grid and locations are expressed in meters from the intersection of grid lines. Common terminology is to use "easting" and "northings" for the coordinates. 
+
+## UTM Projections
+The UTM projection divides the world into 60 vertical slices, known as zones.
+
+```{r, out.width = "400px"}
+knitr::include_graphics("UTM.jpg")
+```
+
+
+## Distances on the earth's surface
+According to *Gauss' Theorema Eggregrium* in differential geometry, a planar map projection that preserves distances between points does not exist.
+
+
+
+As a precursor to this class, I said "objects close in space tend to be more similar." Mathematically, we will require precise distance measurements between points.
+
+
+
+
+\newpage
+
+## Geodesic distance
+
+The geodesic distance in computed as $D = R \phi,$ where $R$ is the radius of the earth and $\phi$ is an angle (in radians) such that:
+
+$$\cos \phi = \sin\theta_1 \sin \theta_2 + \cos \theta_1 \cos \theta_2 cos(\lambda_1 - \lambda_2),$$
+where $\theta_1$ and $\theta_2$ are the latitude measurements and $\lambda_1$ and $\lambda_2$ are the longitude measurements for two points.
+
+Thus
+
+$$D = R \arccos[\sin\theta_1 \sin \theta_2 + \cos \theta_1 \cos \theta_2 cos(\lambda_1 - \lambda_2)]$$
+
+## Chordal Distance
+Another alternative is to use what is known as the chordal distance, which is equivalent to the "burrowed through the earth" distance between two points on the Earth's surface. 
+
+Let
+\begin{eqnarray*}
+x &=& R \cos \theta \cos \lambda \\
+y &=& R \cos \theta \sin \lambda \\
+z &=& R \sin \theta,
+\end{eqnarray*}
+where $x,$ $y$, and $z$ form a set of Cartesian coordinates with the origin at the center of the earth, the $z$-axis runs between the north and south poles. 
+
+Then the chordal distance can be calculated as the Euclidean distance between two vectors $\boldsymbol{u}_1 = (x_1, y_1, z_1)$ and $\boldsymbol{u}_1 = (x_1, y_1, z_1)$.
+
+## Distance Calculation Example
+Calculate the distance between Chicago (41.8781° N, 87.6298° W) and Minneapolis (44.9778° N, 93.2650° W) using naive Euclidean, geodesic, and chordal measures. Note naive Euclidean can be computed by multiplying Euclidean distance (on radians) by R. You can use 6371 km as the radius of the earth.
