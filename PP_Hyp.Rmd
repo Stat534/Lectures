@@ -74,3 +74,51 @@ The empirical estimates of $G$ or $H$ can be compared with $G$ or $F$ using a QQ
 
 Describe a natural process that might cluster and another than might repel
 \vfill
+
+
+## spatstat
+
+Consider a dataset with medieval grave site information.
+
+```{r, fig.height=6, fig.height=6}
+library(spatstat)
+library(smacpod)
+
+data(grave)
+summary(grave)
+plot(grave)
+```
+
+
+\newpage
+
+```{r, fig.height=6, fig.height=6}
+plot(envelope(grave, Fest, verbose = F))
+plot(envelope(grave, Gest, verbose = F))
+```
+\vfill
+
+
+\newpage
+
+### Estimating the intensity Function 
+
+- With CSR, the intensity function is trivial 
+\vfill
+- __Discuss:__ given a realization of a point process, how could an intensity function be estimated?
+\vfill
+
+\vfill
+
+\vfill
+
+Now using the `plot(density(.))` function, plot and interpret the empirical intensity for the grave dataset along with the four synthetic examples.
+
+```{r, fig.height=6, fig.width=6}
+plot(density(grave))
+```
+
+\newpage
+
+Now let's return to the four datasets we looked at earlier. You can use `envelope` and `density` but first need to create `ppp` objects.
+
